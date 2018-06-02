@@ -59,6 +59,7 @@ const slackbot = controller.spawn({
   if (err) { throw new Error(err); }
 });
 
+console.log('hi');
 // prepare webhook
 // for now we won't use this but feel free to look up slack webhooks
 controller.setupWebserver(process.env.PORT || 3001, (err, webserver) => {
@@ -66,6 +67,8 @@ controller.setupWebserver(process.env.PORT || 3001, (err, webserver) => {
     if (err) { throw new Error(err); }
   });
 });
+
+console.log('hi1');
 
 // example hello response
 controller.hears(['hello', 'hi', 'howdy'], ['direct_message', 'direct_mention', 'mention'], (bot, message) => {
@@ -77,6 +80,8 @@ controller.hears(['hello', 'hi', 'howdy'], ['direct_message', 'direct_mention', 
     }
   });
 });
+
+console.log('hi2');
 
 // example hello response
 controller.hears(['hungry', 'food', 'restaurant'], ['direct_message', 'direct_mention', 'mention'], (bot, message) => {
