@@ -66,6 +66,7 @@ controller.setupWebserver(process.env.PORT || 3001, (err, webserver) => {
     if (err) { throw new Error(err); }
   });
 });
+
 // example hello response
 controller.hears(['hello', 'hi', 'howdy'], ['direct_message', 'direct_mention', 'mention'], (bot, message) => {
   bot.api.users.info({ user: message.user }, (err, res) => {
@@ -97,7 +98,6 @@ controller.hears(['hungry', 'food', 'restaurant'], ['direct_message', 'direct_me
                       default: true,
                       callback(locationMessage) {
                         yelpClient.search({ term: termMessage.text, location: locationMessage.text }).then((restaurants) => {
-                          console.log('restaurants: ', restaurants.jsonBody.businesses[0]);
                           bot.reply(
                             locationMessage,
                             {
