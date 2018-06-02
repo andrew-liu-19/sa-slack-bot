@@ -114,6 +114,7 @@ controller.hears(['hungry', 'food', 'restaurant'], ['direct_message', 'direct_me
                               ],
                             },
                           );
+                          convo.next();
                         }).catch((error) => {
                           bot.reply(locationMessage, 'No restaurants found. Sorry.');
                           convo.next();
