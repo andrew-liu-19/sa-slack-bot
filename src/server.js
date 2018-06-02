@@ -40,8 +40,8 @@ app.get('/', (req, res) => {
 
 // START THE SERVER
 // =============================================================================
-let port = process.env.PORT || 9090;
-port = parseInt(port, 10) + 1;
+const port = process.env.PORT || 9090;
+// port = parseInt(port, 10) + 1;
 app.listen(port);
 
 console.log(`listening on: ${port}`);
