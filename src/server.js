@@ -115,7 +115,8 @@ controller.hears(['hungry', 'food', 'restaurant'], ['direct_message', 'direct_me
                             },
                           );
                         }).catch((error) => {
-                          convo.say('No restaurants found. Sorry.');
+                          bot.reply(locationMessage, 'No restaurants found. Sorry.');
+                          convo.next();
                         });
                       },
                     },
@@ -138,7 +139,7 @@ controller.hears(['hungry', 'food', 'restaurant'], ['direct_message', 'direct_me
       {
         default: true,
         callback(reply) {
-          // do nothing
+          bot.reply(message, 'Sorry, I do not understand what you are saying.');
         },
       },
     ]);
