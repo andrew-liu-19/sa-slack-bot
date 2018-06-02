@@ -148,15 +148,23 @@ controller.hears(['hungry', 'food', 'restaurant'], ['direct_message', 'direct_me
   });
 });
 
+console.log('hi3');
+
 controller.hears('help', ['direct_message', 'direct_mention', 'mention'], (bot, message) => {
   bot.reply(message, 'Hi! If you say hi to me, I will say hi back to you. Otherwise, to get a restaurant recommendation, tell me you are hungry!');
 });
+
+console.log('hi4');
 
 // catch-all response
 controller.hears('^.*', ['direct_message', 'direct_mention', 'mention'], (bot, message) => {
   bot.reply(message, 'Sorry, I do not understand what you are saying.');
 });
 
+console.log('hi5');
+
 controller.on('outgoing_webhook', (bot, message) => {
   bot.replyPublic(message, 'yeah yeah');
 });
+
+console.log('hi6');
