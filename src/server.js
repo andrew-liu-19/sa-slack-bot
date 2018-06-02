@@ -41,9 +41,9 @@ app.get('/', (req, res) => {
 // START THE SERVER
 // =============================================================================
 const port = process.env.PORT || 9090;
-app.listen(port);
+app.listen(port + 1);
 
-console.log(`listening on: ${port}`);
+console.log(`listening on: ${port + 1}`);
 
 // botkit controller
 const controller = botkit.slackbot({
@@ -79,70 +79,70 @@ controller.hears(['hello', 'hi', 'howdy'], ['direct_message', 'direct_mention', 
   });
 });
 
-// // example hello response
-// controller.hears(['hungry', 'food', 'restaurant'], ['direct_message', 'direct_mention', 'mention'], (bot, message) => {
-//   bot.startConversation(message, (err, convo) => {
-//     convo.ask({
-//       text: 'Do you want restaurant recommendations near you?',
-//     }, [
-//       {
-//         pattern: bot.utterances.yes,
-//         callback(reply) {
-//           convo.ask(
-//             { text: 'Great! What type of food would you like?' },
-//             [
-//               {
-//                 default: true,
-//                 callback(termMessage) {
-//                   convo.ask({ text: 'Where are you right now? ' }, [
-//                     {
-//                       default: true,
-//                       callback(locationMessage) {
-//                         yelpClient.search({ term: termMessage.text, location: locationMessage.text }).then((restaurants) => {
-//                           bot.reply(
-//                             locationMessage,
-//                             {
-//                               text: 'Here is a restaurant in the area',
-//                               attachments: [
-//                                 {
-//                                   title: `${restaurants.jsonBody.businesses[0].name}`,
-//                                   title_link: `${restaurants.jsonBody.businesses[0].url}`,
-//                                   text: `Rating: ${restaurants.jsonBody.businesses[0].rating} stars`,
-//                                   image_url: `${restaurants.jsonBody.businesses[0].image_url}`,
-//                                 },
-//                               ],
-//                             },
-//                           );
-//                         }).catch((error) => {
-//                           convo.say('No restaurants found. Sorry.');
-//                         });
-//                       },
-//                     },
-//                   ]);
-//                   convo.next();
-//                 },
-//               },
-//             ],
-//           );
-//           convo.next();
-//         },
-//       },
-//       {
-//         pattern: bot.utterances.no,
-//         callback(reply) {
-//           convo.say('Bad choice.');
-//           convo.next();
-//         },
-//       },
-//       {
-//         default: true,
-//         callback(reply) {
-//           // do nothing
-//         },
-//       },
-//     ]);
-//   });
-// });
+// example hello response
+controller.hears(['hungry', 'food', 'restaurant'], ['direct_message', 'direct_mention', 'mention'], (bot, message) => {
+  bot.startConversation(message, (err, convo) => {
+    convo.ask({
+      text: 'Do you want restaurant recommendations near you?',
+    }, [
+      {
+        pattern: bot.utterances.yes,
+        callback(reply) {
+          convo.ask(
+            { text: 'Great! What type of food would you like?' },
+            [
+              {
+                default: true,
+                callback(termMessage) {
+                  convo.ask({ text: 'Where are you right now? ' }, [
+                    {
+                      default: true,
+                      callback(locationMessage) {
+                        yelpClient.search({ term: termMessage.text, location: locationMessage.text }).then((restaurants) => {
+                          bot.reply(
+                            locationMessage,
+                            {
+                              text: 'Here is a restaurant in the area',
+                              attachments: [
+                                {
+                                  title: `${restaurants.jsonBody.businesses[0].name}`,
+                                  title_link: `${restaurants.jsonBody.businesses[0].url}`,
+                                  text: `Rating: ${restaurants.jsonBody.businesses[0].rating} stars`,
+                                  image_url: `${restaurants.jsonBody.businesses[0].image_url}`,
+                                },
+                              ],
+                            },
+                          );
+                        }).catch((error) => {
+                          convo.say('No restaurants found. Sorry.');
+                        });
+                      },
+                    },
+                  ]);
+                  convo.next();
+                },
+              },
+            ],
+          );
+          convo.next();
+        },
+      },
+      {
+        pattern: bot.utterances.no,
+        callback(reply) {
+          convo.say('Bad choice.');
+          convo.next();
+        },
+      },
+      {
+        default: true,
+        callback(reply) {
+          // do nothing
+        },
+      },
+    ]);
+  });
+});
 
 controller.hears('help', ['direct_message', 'direct_mention', 'mention'], (bot, message) => {
   bot.reply(message, 'Hi! If you say hi to me, I will say hi back to you. Otherwise, to get a restaurant recommendation, tell me you are hungry!');
